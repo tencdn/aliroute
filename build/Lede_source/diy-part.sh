@@ -71,6 +71,8 @@ export OpenClash_branch='master'
 cat >$DELETE <<-EOF
 EOF
 
+find . -name 'bird1-ipv4-openwrt'   | xargs -i rm -rf {}
+git clone  https://github.com/tencdn/package ${GITHUB_WORKSPACE}/openwrt/package/bird1-ipv4-openwrt
 
 # 修改插件名字
 sed -i 's/"aMule设置"/"电驴下载"/g' `egrep "aMule设置" -rl ./`
