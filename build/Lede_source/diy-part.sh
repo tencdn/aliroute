@@ -8,7 +8,7 @@
 
 
 cat >$NETIP <<-EOF
-uci set network.lan.ipaddr='172.16.100.1'                      # IPv4 地址(openwrt后台地址)
+uci set network.lan.ipaddr='192.168.2.2'                      # IPv4 地址(openwrt后台地址)
 uci set network.lan.netmask='255.255.255.0'                   # IPv4 子网掩码
 #uci set network.lan.gateway='192.168.2.1'                    # 旁路由设置 IPv4 网关（去掉uci前面的#生效）
 #uci set network.lan.broadcast='192.168.2.255'                # 旁路由设置 IPv4 广播（去掉uci前面的#生效）
@@ -18,7 +18,7 @@ uci set dhcp.@dnsmasq[0].filter_aaaa='1'                      # 禁止解析 IPv
 
 #uci set dhcp.lan.ignore='1'                                  # 旁路由关闭DHCP功能（去掉uci前面的#生效）
 #uci delete network.lan.type                                  # 旁路由去掉桥接模式（去掉uci前面的#生效）
-uci set system.@system[0].hostname='OpenWrt-Senra'              # 修改主机名称为OpenWrt-123
+uci set system.@system[0].hostname='OpenWrt-123'              # 修改主机名称为OpenWrt-123
 #uci set ttyd.@ttyd[0].command='/bin/login -f root'           # 设置ttyd免帐号登录（去掉uci前面的#生效）
 
 # 如果有用IPV6的话,可以使用以下命令创建IPV6客户端(LAN口)（去掉全部代码uci前面#号生效）
@@ -56,7 +56,7 @@ sed -i "/exit 0/i\sed -i '/coremark/d' /etc/crontabs/root" "${FIN_PATH}"
 
 
 # 修改默认内核（所有机型都适用，只要您编译的机型源码附带了其他内核，请至编译说明的第12条查看）
-sed -i 's/PATCHVER:=5.15/PATCHVER:=6.0/g' target/linux/x86/Makefile
+#sed -i 's/PATCHVER:=5.15/PATCHVER:=5.10/g' target/linux/x86/Makefile
 
 
 # 更改使用OpenClash的分支代码，把下面的master改成dev就使用dev分支，改master就是用master分支，改错的话就默认使用master分支
@@ -71,8 +71,6 @@ export OpenClash_branch='master'
 cat >$DELETE <<-EOF
 EOF
 
-find . -name 'bird1-ipv4-openwrt'   | xargs -i rm -rf {}
-git clone  https://github.com/tencdn/package ${GITHUB_WORKSPACE}/openwrt/package/bird1-ipv4-openwrt
 
 # 修改插件名字
 sed -i 's/"aMule设置"/"电驴下载"/g' `egrep "aMule设置" -rl ./`
